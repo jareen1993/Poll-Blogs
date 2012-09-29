@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="maindata.js"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(bear);
+
+        var options = {
+          title: 'Political Parties Distribution',
+          hAxis: {title: 'Frequency', titleTextStyle: {color: 'red'}}
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+      function hey(){
+      drawChart();}
+    </script>
+  </head>
+  <body>
+  <script type="text/javascript">
+  Read();
+  function add(party,fre,i)
+  {
+	  bear[i]=[party,fre];
+  }
+  
+  var bear =new Array();
+  bear[0] = ['Party', 'Frequency'];
+  var i;
+  i=0;
+  var fre;
+  while(i<=38)
+	  {
+	  fre = s_party[i].length;
+	  var str = s_party[i][0];	
+	  add(str,fre,i+1);
+	  i++;
+	  }
+  document.write("So we select the top 20% which is top 8 political parties from graph-->");
+  i=0
+  while(i<8)
+	  {
+	  document.write("	"+s_party[i][0]+",");
+	  i++;
+	  }
+
+  
+    </script>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+        <input id="b1" type="button" onclick="hey()" value="Switch "  />
+    
+    
+  </body>
+</html>

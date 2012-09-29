@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="maindata.js"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      function drawChart() {
+    	var data = [];
+  	    data[0] = google.visualization.arrayToDataTable(bear);
+  	    data[1] = google.visualization.arrayToDataTable(bear1);    
+  	 	var options = [];
+  		options[0] = {
+  	          title: 'Statewise chart of Education Qualification',
+  	          vAxis: {title: 'Frequency',  titleTextStyle: {color: 'red'}}
+  	       		};
+  		options[1] = {
+	          title: 'Major Political Partywise chart of Education Qualification',
+	          vAxis: {title: 'Frequency',  titleTextStyle: {color: 'red'}}
+	        	};
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data[current], options[current]);
+      	}
+
+      function hey() 
+      {
+    	current = 1 - current;
+    	drawChart();
+    	var button = document.getElementById('b1');
+    	button.value = 'Switch to ' + (current ? 'State' : 'Party');
+      }  
+    </script>
+  </head>
+  <body>
+  <script type="text/javascript">
+  var current = 0;
+  function add(state,below_12,grad,postgrad,doct,i)
+  {
+	  bear[i]=[state,below_12,grad,postgrad,doct];
+  }
+  function add1(state,below_12,grad,postgrad,doct,i)
+  {
+	  bear1[i]=[state,below_12,grad,postgrad,doct];
+  }
+ 
+  Read();
+
+  var bear =new Array();
+  var bear1 =new Array();
+  bear[0] = ['State', 'Below_12th', 'Graduation','Post-Graduation','Doctorate'];
+  bear1[0] = ['State', 'Below_12th', 'Graduation','Post-Graduation','Doctorate'];
+
+  var i,j,k;
+  var bel,grad,post,doct;
+  i=0;
+  while(i<=35)
+	  {
+	  j=1;bel=0;grad=0;post=0;doct=0;
+	  var len = s_data[i].length;
+	  while(j<len)
+		  {
+		  k = s_data[i][j];	  
+		  if(maindata[k][8]=="Graduate") {grad++;}
+		  if(maindata[k][8]=="Post Graduate") {post++;}
+		  if(maindata[k][8]=="Doctorate") {doct++;}
+		  if (maindata[k][8]!="Doctorate" && maindata[k][8]!="Post Graduate" && maindata[k][8]!="Graduate") bel++;	 
+		  var str = s_data[i][0];
+			j++;			
+		  }
+	  add(str,bel,grad,post,doct,i+1);
+	  i++;
+	  }
+
+  i=0;
+  while(i<=7)
+	  {
+	  j=1;bel=0;grad=0;post=0;doct=0;
+	  var len = s_party[i].length;
+	  while(j<len)
+		  {
+		  k = s_party[i][j];	  
+		  if(maindata[k][8]=="Graduate") {grad++;}
+		  if(maindata[k][8]=="Post Graduate") {post++;}
+		  if(maindata[k][8]=="Doctorate") {doct++;}
+		  if (maindata[k][8]!="Doctorate" && maindata[k][8]!="Post Graduate" && maindata[k][8]!="Graduate") bel++;	 
+		  var str = s_party[i][0];
+			j++;			
+		  }
+	  add1(str,bel,grad,post,doct,i+1);
+	  i++;
+	  }
+
+  </script>
+    <div id="chart_div" style="width: 2000px; height: 1000px;"></div>
+    <input id="b1" type="button" onclick="hey()" value="Switch "  />
+    </body>
+</html>
